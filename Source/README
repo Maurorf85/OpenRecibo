@@ -4,7 +4,7 @@ Licença: GNU GPL2
 Autor: Mauro Redmer da Fonseca
 Contato: mauro_mrf@yahoo.com.br
 
-OpenRecibo é um programa opensource para emisão de recibos comerciais
+OpenRecibo é um programa opensource para emissão de recibos comerciais
 simples para Linux e Windows, desenvolvido em Lazarus, utiliza banco de
 dados Firebird, relatorios providos por Fortes Report e componentes da ACBR.
 
