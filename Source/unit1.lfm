@@ -1,0 +1,1525 @@
+object Form1: TForm1
+  Left = 373
+  Height = 562
+  Top = 147
+  Width = 887
+  HorzScrollBar.Page = 707
+  VertScrollBar.Page = 486
+  AutoScroll = True
+  Caption = 'OpenRecibo'
+  ClientHeight = 562
+  ClientWidth = 887
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnShow = FormShow
+  Position = poDesktopCenter
+  LCLVersion = '1.6.0.4'
+  object PageControl_menu: TPageControl
+    Left = 0
+    Height = 541
+    Top = 0
+    Width = 887
+    ActivePage = TabSheet_recibos
+    Align = alClient
+    TabIndex = 0
+    TabOrder = 0
+    TabPosition = tpLeft
+    object TabSheet_recibos: TTabSheet
+      Caption = 'Recibos'
+      ClientHeight = 537
+      ClientWidth = 780
+      OnShow = TabSheet_recibosShow
+      object PageControl_recibos: TPageControl
+        Left = 0
+        Height = 537
+        Top = 0
+        Width = 780
+        ActivePage = TabSheet_recibos_detalhe
+        Align = alClient
+        TabIndex = 1
+        TabOrder = 0
+        object TabSheet_recibos_listar: TTabSheet
+          Caption = 'Listar'
+          ClientHeight = 506
+          ClientWidth = 776
+          object ToolBar_recibos_listar: TToolBar
+            Left = 0
+            Height = 22
+            Top = 0
+            Width = 776
+            AutoSize = True
+            Caption = 'ToolBar_recibos_listar'
+            EdgeBorders = []
+            Flat = False
+            ShowCaptions = True
+            TabOrder = 0
+            object ToolButton_recibos_report: TToolButton
+              Left = 151
+              Top = 0
+              AutoSize = True
+              Caption = 'Relatório'
+              OnClick = ToolButton_recibos_reportClick
+            end
+            object ToolButton_recibos_novo: TToolButton
+              Left = 1
+              Top = 0
+              Caption = 'Novo'
+              OnClick = ToolButton_recibos_novoClick
+            end
+            object ToolButton_recibos_edit: TToolButton
+              Left = 101
+              Top = 0
+              Caption = 'Editar'
+              OnClick = ToolButton_recibos_editClick
+            end
+            object ToolButton_recibos_excluir: TToolButton
+              Left = 46
+              Top = 0
+              Caption = 'Excluir'
+              OnClick = ToolButton_recibos_excluirClick
+            end
+            object ToolButton_recibos_recibo: TToolButton
+              Left = 222
+              Top = 0
+              Caption = 'Recibo'
+              OnClick = ToolButton_recibos_reciboClick
+            end
+          end
+          object DBGrid_recibos: TDBGrid
+            Left = 0
+            Height = 484
+            Top = 22
+            Width = 776
+            Align = alClient
+            AutoEdit = False
+            Color = clWindow
+            Columns = <            
+              item
+                Title.Caption = 'ID'
+                Width = 93
+                FieldName = 'ID'
+              end            
+              item
+                Title.Caption = 'NUMERO'
+                Width = 93
+                FieldName = 'NUMERO'
+              end            
+              item
+                Title.Caption = 'DATA'
+                Width = 93
+                FieldName = 'DATA'
+              end            
+              item
+                Title.Caption = 'VALOR'
+                Width = 93
+                FieldName = 'VALOR'
+                DisplayFormat = '#.00'
+              end            
+              item
+                Title.Caption = 'PAGADOR'
+                Width = 93
+                FieldName = 'PAGADOR'
+              end            
+              item
+                Title.Caption = 'EMITENTE'
+                Width = 93
+                FieldName = 'EMITENTE'
+              end            
+              item
+                Title.Caption = 'REFERENTE'
+                Width = 93
+                FieldName = 'REFERENTE'
+              end            
+              item
+                Title.Caption = 'OBS'
+                Width = 99
+                FieldName = 'OBS'
+              end>
+            DataSource = DataModule1.DS_recibo
+            Flat = True
+            Options = [dgTitles, dgIndicator, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit]
+            ReadOnly = True
+            TabOrder = 1
+            OnDblClick = ToolButton_recibos_editClick
+          end
+        end
+        object TabSheet_recibos_detalhe: TTabSheet
+          Caption = 'Detalhe'
+          ClientHeight = 506
+          ClientWidth = 776
+          object ToolBar_recibos_detalhe: TToolBar
+            Left = 0
+            Height = 22
+            Top = 0
+            Width = 776
+            AutoSize = True
+            Caption = 'ToolBar_recibos_detalhe'
+            EdgeBorders = []
+            Flat = False
+            ShowCaptions = True
+            TabOrder = 0
+            object ToolButton_recibos_post: TToolButton
+              Left = 68
+              Top = 0
+              Caption = 'Salvar'
+              OnClick = ToolButton_recibos_postClick
+            end
+            object ToolButton_recibos_cancel: TToolButton
+              Left = 1
+              Top = 0
+              Caption = 'Cancelar'
+              OnClick = ToolButton_recibos_cancelClick
+            end
+            object ToolButton_recibo_print: TToolButton
+              Left = 136
+              Hint = 'Salva e Imprime o recibo.'
+              Top = 0
+              Caption = 'Recibo'
+              OnClick = ToolButton_recibo_printClick
+              ParentShowHint = False
+              ShowHint = True
+            end
+            object ToolButton6: TToolButton
+              Left = 118
+              Height = 22
+              Top = 0
+              Width = 18
+              Caption = 'ToolButton6'
+              Style = tbsSeparator
+            end
+          end
+          object ScrollBox2: TScrollBox
+            Left = 0
+            Height = 484
+            Top = 22
+            Width = 776
+            HorzScrollBar.Page = 596
+            VertScrollBar.Page = 408
+            Align = alClient
+            BorderStyle = bsNone
+            ClientHeight = 484
+            ClientWidth = 776
+            TabOrder = 1
+            object DBLookupComboBox1: TDBLookupComboBox
+              Left = 151
+              Height = 31
+              Top = 192
+              Width = 444
+              DataField = 'LKEMITENTE'
+              DataSource = DataModule1.DS_recibo
+              KeyField = 'ID'
+              ListField = 'NOME'
+              ListFieldIndex = 0
+              ListSource = DataModule1.DS_pessoa
+              LookupCache = False
+              Sorted = True
+              Style = csDropDownList
+              TabOrder = 0
+            end
+            object DBLookupComboBox2: TDBLookupComboBox
+              Left = 151
+              Height = 31
+              Top = 232
+              Width = 444
+              DataField = 'LKPAGADOR'
+              DataSource = DataModule1.DS_recibo
+              KeyField = 'ID'
+              ListField = 'NOME'
+              ListFieldIndex = 0
+              ListSource = DataModule1.DS_pessoa
+              LookupCache = False
+              Sorted = True
+              Style = csDropDownList
+              TabOrder = 1
+            end
+            object Label10: TLabel
+              Left = 121
+              Height = 17
+              Top = 16
+              Width = 17
+              Alignment = taRightJustify
+              Caption = 'Id:'
+              ParentColor = False
+            end
+            object DBText7: TDBText
+              Left = 151
+              Height = 17
+              Top = 16
+              Width = 58
+              DataField = 'ID'
+              DataSource = DataModule1.DS_recibo
+              ParentColor = False
+            end
+            object Label11: TLabel
+              Left = 65
+              Height = 17
+              Top = 41
+              Width = 73
+              Alignment = taRightJustify
+              Caption = 'Criado em:'
+              ParentColor = False
+            end
+            object DBText8: TDBText
+              Left = 151
+              Height = 17
+              Top = 41
+              Width = 58
+              DataField = 'TSINSERT'
+              DataSource = DataModule1.DS_recibo
+              ParentColor = False
+            end
+            object Label12: TLabel
+              Left = 32
+              Height = 17
+              Top = 65
+              Width = 106
+              Alignment = taRightJustify
+              Caption = 'Modificado em:'
+              ParentColor = False
+            end
+            object DBText9: TDBText
+              Left = 151
+              Height = 17
+              Top = 65
+              Width = 58
+              DataField = 'TSUPDATE'
+              DataSource = DataModule1.DS_recibo
+              ParentColor = False
+            end
+            object Label13: TLabel
+              Left = 97
+              Height = 17
+              Top = 97
+              Width = 41
+              Alignment = taRightJustify
+              Caption = 'Ativo:'
+              ParentColor = False
+              Visible = False
+            end
+            object DBCheckBox3: TDBCheckBox
+              Left = 151
+              Height = 24
+              Top = 90
+              Width = 24
+              AutoSize = True
+              DataField = 'ATIVO'
+              DataSource = DataModule1.DS_recibo
+              TabOrder = 2
+              ValueChecked = '1'
+              ValueUnchecked = '0'
+              Visible = False
+            end
+            object Label14: TLabel
+              Left = 71
+              Height = 17
+              Hint = 'Pessoa que está recebendo.'
+              Top = 202
+              Width = 67
+              Alignment = taRightJustify
+              Caption = 'Emitente:'
+              ParentColor = False
+              ParentShowHint = False
+              ShowHint = True
+            end
+            object Label15: TLabel
+              Left = 76
+              Height = 17
+              Hint = 'Pessoa que está pagando.'
+              Top = 242
+              Width = 62
+              Alignment = taRightJustify
+              Caption = 'Pagador:'
+              ParentColor = False
+              ParentShowHint = False
+              ShowHint = True
+            end
+            object Label16: TLabel
+              Left = 66
+              Height = 17
+              Hint = 'Motivo do pagamento.'
+              Top = 280
+              Width = 72
+              Alignment = taRightJustify
+              Caption = 'Referente:'
+              ParentColor = False
+              ParentShowHint = False
+              ShowHint = True
+            end
+            object DBEdit15: TDBEdit
+              Left = 153
+              Height = 25
+              Top = 120
+              Width = 207
+              DataField = 'NUMERO'
+              DataSource = DataModule1.DS_recibo
+              CharCase = ecNormal
+              MaxLength = 0
+              TabOrder = 3
+            end
+            object DBMemo2: TDBMemo
+              Left = 153
+              Height = 56
+              Top = 352
+              Width = 442
+              DataField = 'OBS'
+              DataSource = DataModule1.DS_recibo
+              TabOrder = 4
+            end
+            object Label17: TLabel
+              Left = 45
+              Height = 17
+              Top = 352
+              Width = 93
+              Alignment = taRightJustify
+              Caption = 'Observações:'
+              ParentColor = False
+            end
+            object DBComboBox1: TDBComboBox
+              Left = 455
+              Height = 27
+              Top = 118
+              Width = 140
+              AutoDropDown = True
+              AutoComplete = True
+              DataField = 'VIAS'
+              DataSource = DataModule1.DS_recibo
+              DropDownCount = 4
+              ItemHeight = 0
+              Items.Strings = (
+                '1'
+                '2'
+                '3'
+              )
+              MaxLength = 2
+              TabOrder = 5
+            end
+            object Label18: TLabel
+              Left = 88
+              Height = 17
+              Top = 128
+              Width = 50
+              Alignment = taRightJustify
+              Caption = 'Recibo:'
+              ParentColor = False
+            end
+            object Label19: TLabel
+              Left = 97
+              Height = 17
+              Top = 162
+              Width = 41
+              Alignment = taRightJustify
+              Caption = 'Valor:'
+              ParentColor = False
+            end
+            object Label20: TLabel
+              Left = 412
+              Height = 17
+              Top = 128
+              Width = 33
+              Caption = 'Vias:'
+              ParentColor = False
+            end
+            object DBDateTimePicker1: TDBDateTimePicker
+              Left = 456
+              Height = 23
+              Top = 154
+              Width = 139
+              DataField = 'DATA'
+              DataSource = DataModule1.DS_recibo
+              ReadOnly = False
+              CenturyFrom = 1941
+              MaxDate = 2958465
+              MinDate = -53780
+              AutoSize = False
+              TabOrder = 6
+              TrailingSeparator = False
+              TextForNullDate = 'NULL'
+              LeadingZeros = True
+              NullInputAllowed = False
+              Kind = dtkDate
+              TimeFormat = tf24
+              TimeDisplay = tdHMS
+              DateMode = dmUpDown
+              UseDefaultSeparators = True
+              HideDateTimeParts = []
+              MonthNames = 'Long'
+            end
+            object Label21: TLabel
+              Left = 412
+              Height = 17
+              Top = 162
+              Width = 37
+              Caption = 'Data:'
+              ParentColor = False
+            end
+            object DBEdit16: TDBEdit
+              Left = 153
+              Height = 25
+              Top = 154
+              Width = 208
+              DataField = 'VALOR'
+              DataSource = DataModule1.DS_recibo
+              CharCase = ecNormal
+              MaxLength = 0
+              TabOrder = 7
+            end
+            object DBMemo3: TDBMemo
+              Left = 154
+              Height = 56
+              Top = 280
+              Width = 414
+              DataField = 'REFERENTE'
+              DataSource = DataModule1.DS_recibo
+              MaxLength = 255
+              TabOrder = 8
+            end
+            object DBLookupComboBox3: TDBLookupComboBox
+              Left = 567
+              Height = 31
+              Top = 280
+              Width = 28
+              DropDownCount = 20
+              KeyField = 'ID'
+              ListField = 'REFERENTE'
+              ListFieldIndex = 0
+              ListSource = DataModule1.DS_referente
+              LookupCache = False
+              OnDropDown = DBLookupComboBox3DropDown
+              OnSelect = DBLookupComboBox3Select
+              ReadOnly = True
+              Sorted = True
+              Style = csDropDownList
+              TabOrder = 9
+            end
+            object SpeedButton1: TSpeedButton
+              Left = 568
+              Height = 24
+              Top = 312
+              Width = 28
+              Caption = 'x'
+              OnClick = SpeedButton1Click
+            end
+          end
+        end
+      end
+    end
+    object TabSheet_pessoas: TTabSheet
+      Caption = 'Pessoas'
+      ClientHeight = 537
+      ClientWidth = 780
+      OnShow = TabSheet_pessoasShow
+      object PageControl_pessoas: TPageControl
+        Left = 0
+        Height = 537
+        Top = 0
+        Width = 780
+        ActivePage = TabSheet_pessoas_listar
+        Align = alClient
+        TabIndex = 0
+        TabOrder = 0
+        object TabSheet_pessoas_listar: TTabSheet
+          Caption = 'Listar'
+          ClientHeight = 533
+          ClientWidth = 776
+          object ToolBar_pessoas_listar: TToolBar
+            Left = 0
+            Height = 22
+            Top = 0
+            Width = 776
+            AutoSize = True
+            Caption = 'ToolBar_pessoas_listar'
+            EdgeBorders = []
+            Flat = False
+            ShowCaptions = True
+            TabOrder = 0
+            object ToolButton_pessoas_report: TToolButton
+              Left = 151
+              Top = 0
+              AutoSize = True
+              Caption = 'Relatório'
+              OnClick = ToolButton_pessoas_reportClick
+            end
+            object ToolButton_pessoas_novo: TToolButton
+              Left = 1
+              Top = 0
+              Caption = 'Novo'
+              OnClick = ToolButton_pessoas_novoClick
+            end
+            object ToolButton_pessoas_edit: TToolButton
+              Left = 101
+              Top = 0
+              Caption = 'Editar'
+              OnClick = ToolButton_pessoas_editClick
+            end
+            object ToolButton_pessoas_excluir: TToolButton
+              Left = 46
+              Top = 0
+              Caption = 'Excluir'
+              OnClick = ToolButton_pessoas_excluirClick
+            end
+          end
+          object DBGrid_pessoas: TDBGrid
+            Left = 0
+            Height = 484
+            Top = 22
+            Width = 776
+            Align = alClient
+            AutoEdit = False
+            AutoFillColumns = True
+            Color = clWindow
+            Columns = <            
+              item
+                SizePriority = 0
+                Title.Caption = 'ID'
+                Width = 80
+                FieldName = 'ID'
+              end            
+              item
+                Title.Caption = 'NOME'
+                Width = 683
+                FieldName = 'NOME'
+              end>
+            DataSource = DataModule1.DS_pessoa
+            Flat = True
+            Options = [dgTitles, dgIndicator, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit]
+            ReadOnly = True
+            TabOrder = 1
+            OnDblClick = ToolButton_pessoas_editClick
+          end
+        end
+        object TabSheet_pessoas_detalhe: TTabSheet
+          Caption = 'Detalhe'
+          ClientHeight = 533
+          ClientWidth = 776
+          object ToolBar_pessoas_detalhe: TToolBar
+            Left = 0
+            Height = 22
+            Top = 0
+            Width = 776
+            AutoSize = True
+            Caption = 'ToolBar_pessoas_detalhe'
+            EdgeBorders = []
+            Flat = False
+            ShowCaptions = True
+            TabOrder = 0
+            object ToolButton_pessoas_post: TToolButton
+              Left = 68
+              Top = 0
+              Caption = 'Salvar'
+              OnClick = ToolButton_pessoas_postClick
+            end
+            object ToolButton_pessoas_cancel: TToolButton
+              Left = 1
+              Top = 0
+              Caption = 'Cancelar'
+              OnClick = ToolButton_pessoas_cancelClick
+            end
+          end
+          object ScrollBox1: TScrollBox
+            Left = 0
+            Height = 484
+            Top = 22
+            Width = 776
+            HorzScrollBar.Page = 601
+            VertScrollBar.Page = 464
+            Align = alClient
+            BorderStyle = bsNone
+            ClientHeight = 484
+            ClientWidth = 776
+            TabOrder = 1
+            object Label6: TLabel
+              Left = 105
+              Height = 17
+              Top = 8
+              Width = 17
+              Caption = 'Id:'
+              ParentColor = False
+            end
+            object DBText4: TDBText
+              Left = 128
+              Height = 17
+              Top = 8
+              Width = 58
+              DataField = 'ID'
+              DataSource = DataModule1.DS_pessoa
+              ParentColor = False
+            end
+            object Label7: TLabel
+              Left = 48
+              Height = 17
+              Top = 32
+              Width = 73
+              Caption = 'Criado em:'
+              ParentColor = False
+            end
+            object DBText5: TDBText
+              Left = 128
+              Height = 17
+              Top = 32
+              Width = 58
+              DataField = 'TSINSERT'
+              DataSource = DataModule1.DS_pessoa
+              ParentColor = False
+            end
+            object Label8: TLabel
+              Left = 16
+              Height = 17
+              Top = 56
+              Width = 106
+              Caption = 'Modificado em:'
+              ParentColor = False
+            end
+            object DBText6: TDBText
+              Left = 128
+              Height = 17
+              Top = 56
+              Width = 58
+              DataField = 'TSUPDATE'
+              DataSource = DataModule1.DS_pessoa
+              ParentColor = False
+            end
+            object Label9: TLabel
+              Left = 81
+              Height = 17
+              Top = 89
+              Width = 41
+              Caption = 'Ativo:'
+              ParentColor = False
+              Visible = False
+            end
+            object DBCheckBox2: TDBCheckBox
+              Left = 135
+              Height = 24
+              Top = 82
+              Width = 24
+              AutoSize = True
+              DataField = 'ATIVO'
+              DataSource = DataModule1.DS_pessoa
+              TabOrder = 0
+              ValueChecked = '1'
+              ValueUnchecked = '0'
+              Visible = False
+            end
+            object DBEdit1: TDBEdit
+              Left = 136
+              Height = 25
+              Top = 112
+              Width = 464
+              DataField = 'NOME'
+              DataSource = DataModule1.DS_pessoa
+              CharCase = ecNormal
+              MaxLength = 0
+              TabOrder = 1
+            end
+            object DBEdit2: TDBEdit
+              Left = 135
+              Height = 25
+              Top = 224
+              Width = 464
+              DataField = 'ENDERECO'
+              DataSource = DataModule1.DS_pessoa
+              CharCase = ecNormal
+              MaxLength = 0
+              TabOrder = 2
+            end
+            object DBEdit3: TDBEdit
+              Left = 135
+              Height = 25
+              Top = 255
+              Width = 464
+              DataField = 'COMPLEMENTO'
+              DataSource = DataModule1.DS_pessoa
+              CharCase = ecNormal
+              MaxLength = 0
+              TabOrder = 3
+            end
+            object DBEdit4: TDBEdit
+              Left = 135
+              Height = 25
+              Top = 287
+              Width = 465
+              DataField = 'BAIRRO'
+              DataSource = DataModule1.DS_pessoa
+              CharCase = ecNormal
+              MaxLength = 0
+              TabOrder = 4
+            end
+            object DBEdit5: TDBEdit
+              Left = 135
+              Height = 25
+              Top = 319
+              Width = 313
+              DataField = 'CIDADE'
+              DataSource = DataModule1.DS_pessoa
+              CharCase = ecNormal
+              MaxLength = 0
+              TabOrder = 5
+            end
+            object DBEdit7: TDBEdit
+              Left = 136
+              Height = 25
+              Top = 359
+              Width = 97
+              DataField = 'CEP'
+              DataSource = DataModule1.DS_pessoa
+              CharCase = ecNormal
+              MaxLength = 0
+              TabOrder = 6
+            end
+            object DBEdit6: TDBEdit
+              Left = 519
+              Height = 25
+              Top = 319
+              Width = 80
+              DataField = 'ESTADO'
+              DataSource = DataModule1.DS_pessoa
+              CharCase = ecNormal
+              MaxLength = 0
+              TabOrder = 7
+            end
+            object DBEdit8: TDBEdit
+              Left = 296
+              Height = 25
+              Top = 359
+              Width = 303
+              DataField = 'TELEFONE'
+              DataSource = DataModule1.DS_pessoa
+              CharCase = ecNormal
+              MaxLength = 0
+              TabOrder = 8
+            end
+            object DBEdit9: TDBEdit
+              Left = 136
+              Height = 25
+              Top = 399
+              Width = 465
+              DataField = 'EMAIL'
+              DataSource = DataModule1.DS_pessoa
+              CharCase = ecNormal
+              MaxLength = 0
+              TabOrder = 9
+            end
+            object DBEdit10: TDBEdit
+              Left = 134
+              Height = 25
+              Top = 439
+              Width = 465
+              DataField = 'WEB'
+              DataSource = DataModule1.DS_pessoa
+              CharCase = ecNormal
+              MaxLength = 0
+              TabOrder = 10
+            end
+            object DBEdit11: TDBEdit
+              Left = 136
+              Height = 25
+              Top = 152
+              Width = 192
+              DataField = 'CPF'
+              DataSource = DataModule1.DS_pessoa
+              CharCase = ecNormal
+              MaxLength = 0
+              TabOrder = 11
+            end
+            object DBEdit12: TDBEdit
+              Left = 408
+              Height = 25
+              Top = 152
+              Width = 192
+              DataField = 'RG'
+              DataSource = DataModule1.DS_pessoa
+              CharCase = ecNormal
+              MaxLength = 0
+              TabOrder = 12
+            end
+            object DBEdit13: TDBEdit
+              Left = 135
+              Height = 25
+              Top = 184
+              Width = 193
+              DataField = 'CNPJ'
+              DataSource = DataModule1.DS_pessoa
+              CharCase = ecNormal
+              MaxLength = 0
+              TabOrder = 13
+            end
+            object DBEdit14: TDBEdit
+              Left = 407
+              Height = 25
+              Top = 184
+              Width = 192
+              DataField = 'IE'
+              DataSource = DataModule1.DS_pessoa
+              CharCase = ecNormal
+              MaxLength = 0
+              TabOrder = 14
+            end
+            object Label22: TLabel
+              Left = 72
+              Height = 17
+              Top = 120
+              Width = 45
+              Caption = 'Nome:'
+              ParentColor = False
+            end
+            object Label23: TLabel
+              Left = 88
+              Height = 17
+              Top = 160
+              Width = 30
+              Caption = 'CPF:'
+              ParentColor = False
+            end
+            object Label24: TLabel
+              Left = 376
+              Height = 17
+              Top = 160
+              Width = 23
+              Caption = 'RG:'
+              ParentColor = False
+            end
+            object Label25: TLabel
+              Left = 82
+              Height = 17
+              Top = 192
+              Width = 40
+              Caption = 'CNPJ:'
+              ParentColor = False
+            end
+            object Label26: TLabel
+              Left = 378
+              Height = 17
+              Top = 192
+              Width = 21
+              Caption = 'I.E:'
+              ParentColor = False
+            end
+            object Label27: TLabel
+              Left = 49
+              Height = 17
+              Top = 234
+              Width = 69
+              Caption = 'Endereço:'
+              ParentColor = False
+            end
+            object Label28: TLabel
+              Left = 16
+              Height = 17
+              Top = 265
+              Width = 101
+              Caption = 'Complemento:'
+              ParentColor = False
+            end
+            object Label29: TLabel
+              Left = 68
+              Height = 17
+              Top = 297
+              Width = 47
+              Caption = 'Bairro:'
+              ParentColor = False
+            end
+            object Label30: TLabel
+              Left = 62
+              Height = 17
+              Top = 328
+              Width = 51
+              Caption = 'Cidade:'
+              ParentColor = False
+            end
+            object Label31: TLabel
+              Left = 480
+              Height = 17
+              Top = 328
+              Width = 26
+              Caption = 'U.F:'
+              ParentColor = False
+            end
+            object Label32: TLabel
+              Left = 80
+              Height = 17
+              Top = 369
+              Width = 31
+              Caption = 'CEP:'
+              ParentColor = False
+            end
+            object Label33: TLabel
+              Left = 252
+              Height = 17
+              Top = 369
+              Width = 38
+              Caption = 'Fone:'
+              ParentColor = False
+            end
+            object Label34: TLabel
+              Left = 67
+              Height = 17
+              Top = 409
+              Width = 46
+              Caption = 'E-mail:'
+              ParentColor = False
+            end
+            object Label35: TLabel
+              Left = 78
+              Height = 17
+              Top = 446
+              Width = 35
+              Caption = 'Web:'
+              ParentColor = False
+            end
+          end
+        end
+      end
+    end
+    object TabSheet_ref: TTabSheet
+      Caption = 'Referentes'
+      ClientHeight = 537
+      ClientWidth = 780
+      OnShow = TabSheet_refShow
+      object PageControl_ref: TPageControl
+        Left = 0
+        Height = 537
+        Top = 0
+        Width = 780
+        ActivePage = TabSheet_ref_listar
+        Align = alClient
+        TabIndex = 0
+        TabOrder = 0
+        object TabSheet_ref_listar: TTabSheet
+          Caption = 'Listar'
+          ClientHeight = 533
+          ClientWidth = 776
+          object DBGrid_ref: TDBGrid
+            Left = 0
+            Height = 484
+            Top = 22
+            Width = 776
+            Align = alClient
+            AutoEdit = False
+            AutoFillColumns = True
+            Color = clWindow
+            Columns = <            
+              item
+                Font.Height = -13
+                MaxSize = 10
+                SizePriority = 0
+                Title.Caption = 'ID'
+                Width = 80
+                FieldName = 'ID'
+              end            
+              item
+                Title.Caption = 'REFERENTE'
+                Width = 683
+                FieldName = 'REFERENTE'
+              end>
+            DataSource = DataModule1.DS_referente
+            Flat = True
+            Options = [dgTitles, dgIndicator, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit]
+            ReadOnly = True
+            TabOrder = 0
+            OnDblClick = ToolButton_ref_editClick
+          end
+          object ToolBar_ref_listar: TToolBar
+            Left = 0
+            Height = 22
+            Top = 0
+            Width = 776
+            AutoSize = True
+            Caption = 'ToolBar_ref_listar'
+            EdgeBorders = []
+            Flat = False
+            ShowCaptions = True
+            TabOrder = 1
+            object ToolButton_ref_report: TToolButton
+              Left = 151
+              Top = 0
+              AutoSize = True
+              Caption = 'Relatório'
+              OnClick = ToolButton_ref_reportClick
+            end
+            object ToolButton_ref_novo: TToolButton
+              Left = 1
+              Top = 0
+              Caption = 'Novo'
+              OnClick = ToolButton_ref_novoClick
+            end
+            object ToolButton_ref_edit: TToolButton
+              Left = 101
+              Top = 0
+              Caption = 'Editar'
+              OnClick = ToolButton_ref_editClick
+            end
+            object ToolButton_ref_excluir: TToolButton
+              Left = 46
+              Top = 0
+              Caption = 'Excluir'
+              OnClick = ToolButton_ref_excluirClick
+            end
+          end
+        end
+        object TabSheet_ref_detalhe: TTabSheet
+          Caption = 'Detalhe'
+          ClientHeight = 533
+          ClientWidth = 776
+          object DBText1: TDBText
+            Left = 128
+            Height = 17
+            Top = 56
+            Width = 58
+            DataField = 'ID'
+            DataSource = DataModule1.DS_referente
+            ParentColor = False
+          end
+          object DBText2: TDBText
+            Left = 128
+            Height = 17
+            Top = 81
+            Width = 58
+            DataField = 'TSINSERT'
+            DataSource = DataModule1.DS_referente
+            ParentColor = False
+          end
+          object DBText3: TDBText
+            Left = 128
+            Height = 17
+            Top = 105
+            Width = 58
+            DataField = 'TSUPDATE'
+            DataSource = DataModule1.DS_referente
+            ParentColor = False
+          end
+          object DBCheckBox1: TDBCheckBox
+            Left = 128
+            Height = 24
+            Top = 130
+            Width = 24
+            AutoSize = True
+            DataField = 'ATIVO'
+            DataSource = DataModule1.DS_referente
+            TabOrder = 0
+            ValueChecked = '1'
+            ValueUnchecked = '0'
+            Visible = False
+          end
+          object DBMemo1: TDBMemo
+            Left = 128
+            Height = 58
+            Top = 161
+            Width = 461
+            DataField = 'REFERENTE'
+            DataSource = DataModule1.DS_referente
+            MaxLength = 254
+            TabOrder = 1
+          end
+          object Label1: TLabel
+            Left = 98
+            Height = 17
+            Top = 56
+            Width = 17
+            Caption = 'Id:'
+            ParentColor = False
+          end
+          object Label2: TLabel
+            Left = 42
+            Height = 17
+            Top = 81
+            Width = 73
+            Caption = 'Criado em:'
+            ParentColor = False
+          end
+          object Label3: TLabel
+            Left = 9
+            Height = 17
+            Top = 105
+            Width = 106
+            Caption = 'Modificado em:'
+            ParentColor = False
+          end
+          object Label4: TLabel
+            Left = 74
+            Height = 17
+            Top = 137
+            Width = 41
+            Caption = 'Ativo:'
+            ParentColor = False
+            Visible = False
+          end
+          object Label5: TLabel
+            Left = 43
+            Height = 17
+            Top = 161
+            Width = 72
+            Caption = 'Referente:'
+            ParentColor = False
+          end
+          object ToolBar_ref_detalhe: TToolBar
+            Left = 0
+            Height = 22
+            Top = 0
+            Width = 776
+            AutoSize = True
+            Caption = 'ToolBar_ref_detalhe'
+            EdgeBorders = []
+            Flat = False
+            ShowCaptions = True
+            TabOrder = 2
+            object ToolButton_ref_post1: TToolButton
+              Left = 68
+              Top = 0
+              Caption = 'Salvar'
+              OnClick = ToolButton_ref_post1Click
+            end
+            object ToolButton_ref_cancel1: TToolButton
+              Left = 1
+              Top = 0
+              Caption = 'Cancelar'
+              OnClick = ToolButton_ref_cancel1Click
+            end
+          end
+        end
+      end
+    end
+    object TabSheet_config: TTabSheet
+      Caption = 'Configuração'
+      ClientHeight = 537
+      ClientWidth = 780
+      OnShow = TabSheet_configShow
+      object LabeledEdit1: TLabeledEdit
+        Left = 32
+        Height = 27
+        Top = 128
+        Width = 464
+        EditLabel.AnchorSideLeft.Control = LabeledEdit1
+        EditLabel.AnchorSideRight.Control = LabeledEdit1
+        EditLabel.AnchorSideRight.Side = asrBottom
+        EditLabel.AnchorSideBottom.Control = LabeledEdit1
+        EditLabel.Left = 32
+        EditLabel.Height = 17
+        EditLabel.Top = 108
+        EditLabel.Width = 464
+        EditLabel.Caption = 'Servidor Firebird'
+        EditLabel.ParentColor = False
+        TabOrder = 0
+      end
+      object LabeledEdit2: TLabeledEdit
+        Left = 32
+        Height = 27
+        Top = 184
+        Width = 464
+        EditLabel.AnchorSideLeft.Control = LabeledEdit2
+        EditLabel.AnchorSideRight.Control = LabeledEdit2
+        EditLabel.AnchorSideRight.Side = asrBottom
+        EditLabel.AnchorSideBottom.Control = LabeledEdit2
+        EditLabel.Left = 32
+        EditLabel.Height = 17
+        EditLabel.Top = 164
+        EditLabel.Width = 464
+        EditLabel.Caption = 'Usuario Firebird'
+        EditLabel.ParentColor = False
+        TabOrder = 1
+      end
+      object LabeledEdit3: TLabeledEdit
+        Left = 32
+        Height = 27
+        Top = 240
+        Width = 400
+        EchoMode = emPassword
+        EditLabel.AnchorSideLeft.Control = LabeledEdit3
+        EditLabel.AnchorSideRight.Control = LabeledEdit3
+        EditLabel.AnchorSideRight.Side = asrBottom
+        EditLabel.AnchorSideBottom.Control = LabeledEdit3
+        EditLabel.Left = 32
+        EditLabel.Height = 17
+        EditLabel.Top = 220
+        EditLabel.Width = 400
+        EditLabel.Caption = 'Senha Firebird'
+        EditLabel.ParentColor = False
+        PasswordChar = '*'
+        TabOrder = 2
+      end
+      object LabeledEdit4: TLabeledEdit
+        Left = 32
+        Height = 27
+        Top = 296
+        Width = 464
+        EditLabel.AnchorSideLeft.Control = LabeledEdit4
+        EditLabel.AnchorSideRight.Control = LabeledEdit4
+        EditLabel.AnchorSideRight.Side = asrBottom
+        EditLabel.AnchorSideBottom.Control = LabeledEdit4
+        EditLabel.Left = 32
+        EditLabel.Height = 17
+        EditLabel.Top = 276
+        EditLabel.Width = 464
+        EditLabel.Caption = 'Banco de Dados'
+        EditLabel.ParentColor = False
+        TabOrder = 3
+      end
+      object ToolBar_config: TToolBar
+        Left = 0
+        Height = 22
+        Top = 0
+        Width = 780
+        AutoSize = True
+        EdgeBorders = []
+        Flat = False
+        ShowCaptions = True
+        TabOrder = 4
+        object ToolButton_config_cancel: TToolButton
+          Left = 1
+          Top = 0
+          Caption = 'Cancelar'
+          OnClick = ToolButton_config_cancelClick
+        end
+        object ToolButton_config_save: TToolButton
+          Left = 68
+          Top = 0
+          Caption = 'Salvar'
+          OnClick = ToolButton_config_saveClick
+        end
+        object ToolButton7: TToolButton
+          Left = 118
+          Height = 22
+          Top = 0
+          Width = 66
+          Caption = 'ToolButton7'
+          Style = tbsSeparator
+        end
+        object ToolButton1: TToolButton
+          Left = 184
+          Top = 0
+          Caption = 'Excluir Tabelas'
+          OnClick = ToolButton1Click
+        end
+        object ToolButton2: TToolButton
+          Left = 293
+          Top = 0
+          Caption = 'Criar Tabelas'
+          OnClick = ToolButton2Click
+        end
+        object ToolButton4: TToolButton
+          Left = 388
+          Height = 22
+          Top = 0
+          Width = 8
+          Caption = 'ToolButton4'
+          Style = tbsSeparator
+        end
+        object ToolButton5: TToolButton
+          Left = 396
+          Top = 0
+          Caption = 'Excluir DB'
+          OnClick = ToolButton5Click
+          Visible = False
+        end
+        object ToolButton8: TToolButton
+          Left = 475
+          Top = 0
+          Caption = 'Criar DB'
+          OnClick = ToolButton8Click
+          Visible = False
+        end
+      end
+      object ToggleBox1: TToggleBox
+        Left = 440
+        Height = 25
+        Top = 240
+        Width = 56
+        Caption = 'ver'
+        OnChange = ToggleBox1Change
+        TabOrder = 5
+      end
+      object ComboBox1: TComboBox
+        Left = 32
+        Height = 29
+        Top = 64
+        Width = 464
+        ItemHeight = 0
+        TabOrder = 6
+      end
+      object Label36: TLabel
+        Left = 32
+        Height = 17
+        Top = 44
+        Width = 126
+        Caption = 'Biblioteca Firebird'
+        ParentColor = False
+      end
+    end
+    object TabSheet_sobre: TTabSheet
+      Caption = 'Sobre'
+      ClientHeight = 537
+      ClientWidth = 780
+      object PageControl_sobre: TPageControl
+        Left = 0
+        Height = 503
+        Top = 0
+        Width = 780
+        Align = alClient
+        TabOrder = 0
+      end
+      object ToolBar_sobre: TToolBar
+        Left = 0
+        Height = 34
+        Top = 503
+        Width = 780
+        Align = alBottom
+        AutoSize = True
+        Caption = 'ToolBar_sobre'
+        TabOrder = 1
+        object Image1: TImage
+          Cursor = crHandPoint
+          Left = 1
+          Height = 32
+          Hint = 'Click aqui para realizar uma doação de qualquer valor, atravéz do Pagseguro.'
+          Top = 2
+          Width = 205
+          AntialiasingMode = amOn
+          Align = alLeft
+          AutoSize = True
+          Center = True
+          OnClick = Image1Click
+          ParentShowHint = False
+          Picture.Data = {
+            0954474946496D616765230A0000474946383961CD001E00F70000000000FFFF
+            FF25B737F4F4F4EBEBEBBEBEBE24B03522A732219F301E972D35BB4549C2585F
+            C86C8AD7939ADAA26FCA787DD286AFE2B4C4EAC8CDEBD0D4F0D7DFF2DF7D7E7D
+            FEFFFEFDFEFDFBFCFBECEDECCACBCAC7C8C7AEAFAEA4A5A4E5F4E3F1F9F0EDF4
+            EBF8FCF6DCECD3E0F1D4F2F9EDF7FBF4ABD886D3EAC0D4EBC2DFF0D1DEEFD0DF
+            EFD2E5F3DAEAF5E1F5FAF1E9EEE57DC2427EC2437FC3457FC34680C34681C448
+            82C44983C54B84C54C86C64F87C7518AC8558DC95A91CB5F93CC6194CD6396CD
+            6799CF6B9BD16E9DD171A1D376A2D378A3D479A4D47BA6D57EA9D782AED989B1
+            DB8EAFD78DB4DC92B3DB91B4DB93B7DD95B8DE98B7DA99BCE09EBBDF9DBFE1A2
+            C1E2A5C3E3A8C4E3AAC5E4ABC7E5AEC8E5AFC6E3ADCBE5B5CFE9B9CEE7B8D0E9
+            BBD7ECC5D6EAC5DAEEC9D1E1C3DBEBCDE8F4DEDDE6D5EFF7E8DFEBD4DFE6D8F0
+            F2EEFDFEFA50504F666665302F1AB7AC1F3F3907F8E52B827738C7C1A02C2606
+            CBAC1DFAD726E5C523FCDC3AFCE15FA298671C1B16B2AC8FF6EFCEFEF8DBBEBB
+            ACFCD10F907710070602C5B15EFDE88CB9AD7C363326FDEFB4FEF4C7DBD7C7FF
+            FBEB7A6411F4F1E6BC9210FAC9244C4223544008FBBD1B1F1704E0A61EA6812C
+            F5AC1D27231B141311D6951A291D0784580FE7961EB47216F7991F8955124027
+            09CF781B985B14140C03D1CAC2F58721854A13664E38381D08F47622B25919F4
+            7A23E97421763C12967864D1631EA65019985C395E2C11585655BF511DF26825
+            6A2510F05526B33F1D1808047A2514EF4727EF3F279C29196B1A1158140EEE36
+            27380D093718152215141F14134B3432130403E43026891F17EE3228EB3228D6
+            2D24BE2920441A17403E3EAAA6A6FAFAFAF7F7F7F5F5F5F0F0F0EFEFEFE6E6E6
+            E5E5E5E2E2E2E0E0E0DCDCDCDBDBDBD9D9D9D6D6D6D4D4D4D2D2D2D0D0D0C4C4
+            C4C1C1C1BDBDBDB4B4B4ABABABA1A1A19999998F8F8F8A8A8A8585858080807C
+            7C7C7777777171716C6C6C5C5C5C5353534D4D4D4848483B3B3B3434342B2B2B
+            2222221E1E1E1A1A1A0E0E0E090909060606030303010101FFFFFF21F9040100
+            00FF002C00000000CD001E000008FF00FF091848B0A0C18308132A5CC8B0A1C3
+            8710234A9C48B1E13F8115336ADC283180C78F20438A1C49B2A4C99328538E1C
+            8891A3CB972F55CA9C49B3A6CD00020AC0DCC993E2CD9F4083AACCD9B3A8D185
+            42932A4D4AF4A8D3A74BA34A9DD9F4A9D59E27A399738389D226446F024D1D6B
+            B3EAD5B32E4D76C0C4E99220417B0C253A446711D9BB29CDA2DD5BB1643A52A2
+            2E4D12A4472E20467FE8D4C1CB98A4DE880E405278C0D7294968A43C7D124CD8
+            90A20B17DA241A64B7B1698F8F214A08404102058F0C2A1B1D59CDD92C539F3C
+            49B28329121F470118252A64E9F4E9D40F510F6C104002C1050D1A507E1E1D82
+            82810B18646F70BDE083E8DD0528FF80D0C0FA7306E31B2C10C0407A5F91E980
+            AD12156A57AE5AAB4E6DCAE44791A13D9E94F21107F9B8534E3CF5BC418D47E0
+            B4338F3DF8CC13C005E4BCF30C84ED0440021133C45044002258F1830C3744E1
+            511A582411440F3DBCE0040F294CE8830E2638D1C319270871410B4AF0904311
+            6988845C430BB0569072108014C140497EF4C175110410E5070529F09A47145C
+            B700084E76C7E5071E8110256C3E89F48C30B0FCB20C2FB8D8A20A6EA310C2C7
+            1E7A70F2CA47EB00C08F3CEBDC03C03A17B803C03DECC403003BD43C03003DE9
+            D80380392D74B8C5176294E0430C277011430C2E7C61830E4E4811C30F6DE820
+            430901B410031101F010430E3B50FFE1C50C374861440C4008A91345492E4910
+            6A0C0400C202560640590412ACF75A6C607EF0C07A0445B9E46ADC7109810051
+            3A2040910158E7D192AF5D3BD148C408738B32CAB0E9262BA688420A21760C72
+            8A2C1FD103C01B1EA103403BFABA214D00F300108E1B00A8734134FA00E08DA6
+            3184E19112B85AB1440C388821430FA85A8129193108E11115316871C6A64EB4
+            41420C33A810800B9BEA5A51640D3C170095D92E1740CC0B90170197C47A042D
+            410A78A4E57A49523050B0CE3D6064D0015C07E6CF118D740C30C9A0DB4B9BB6
+            B0B20A298DC8118A27AED01B0035FD00F08D47F00050403E020730CD3EFB70A3
+            6706011430B7084C74B84406326CFFFAEA113CC68085474208FE440C57048041
+            0F9C66312A0601407C844728C41084CB14AD16DB40D20AA039E7372BDD5C9420
+            B067A441481BC45CCC02F42AC0EAA63BC7F47B2115E3CB2FE8A6DB262CA4DC31
+            471C94B4C289D81D0C1A0036EF0020210000749041F2F58803403FD654636F3D
+            178810C0C831BCD0611A745F1040E12686B1A919859311001631F010C0103170
+            E15111312C1140093DD4B002E6136590014110F0DF7A2290816B290004195880
+            04324099003AA70119605D41189001E728306610F4D502AFB5C0D84030661474
+            0E45FC4742FFD1C317A14006BA82C1A65B34020F78C8832E56E1895744230369
+            CB043E98270F0D64C05EFED047DAFFE2418084F1231FF500803BC2800323140E
+            09196042FB9020842064405431B0C1116250831710A17D40A01F90367506FF81
+            21063430820E76308612FA0F27BB32801CE748C73ACA7101FE9380042AE03F08
+            C8F10119084103269001071880801170400822784806DAD1008B7400211B6080
+            054492801390E32215D0C807180082867CA428E9E846FFA523199A0046EE94D1
+            0B6154021290C8432A4C310A0E646000093BC7393CB00D1266C302E9E086362C
+            E03C0EB4E31CD9D821075AE0852C746105244C4115A8D0051664C00458A80209
+            AE1003289E410A5670010850C082128C0105253403149EE0851794926E4D19A5
+            282130807AD633020CA063034630FF801150B292FC9C80030640497E72D28E0B
+            98403FFF6900062814060EE0A402FA2947831E72007E94E728EDC9516B0CE311
+            B0B8053372270CC14C0214B130052AEA59BC7B70F4A52F35873A3AE08124BA01
+            A6381D001B9AE085314C61063650434E874A54380E44A3484DAA5297CAD4A6CE
+            31A7E690C42554118B5D24C317C070852F9A710B5BB8021CF57C873EDE41548E
+            CA837900D8C73B3450567B9AC16F9633435BE76A4FA30AE00078CDAB5EF7CAD7
+            BEFAF5AF800DAC60070B580218F6B087B5801C3AA18AC6B6A215AE68867D66D1
+            01C45AF6B296C5C6383A308E6B60F6B386454319CAB006D09AF6B47625AC6A57
+            CBDAD6BA16AFA635071C06D10956FFA8A2159E38C52E8C118ED3FAF6B7C00DAE
+            6FED8A80D71AF7B8C825EC3596CBDCE65E231BE898471F28118A48D0C203CECD
+            AE76B7CBDDEE7AF7BBDE252E02C64BDEF29AF7BCE84DAF7AD7CBDEF6BA57BDD9
+            88AF7CE74BDFFADAF7BEF8CDAF7EF7CBDFFBDA3501EF0DB080074CE00223601B
+            084EB08217CCE0063BF8C1108EB08427ECE0FF26E0C218CEB08637CCE10E7BF8
+            C3200EB1883DDC8D129BF8C4284EB18A57CCE216BBF8C5305E716A474CE31ADB
+            F8C6384E003876CCE31EFBF8C7400EB290874CE4221BF9C7DD40CDAE64C36488
+            18E7C965C9C9929B4CE52A5BD92105B84801B6CCE52E7BF9CB600EB398C74CE6
+            329BF9CC684EB39AD7CCE6325F24012000
+          }
+          Proportional = True
+          ShowHint = True
+          Stretch = True
+        end
+      end
+      object Memo_sobre: TMemo
+        Left = 10
+        Height = 503
+        Top = 0
+        Width = 770
+        Align = alClient
+        BorderSpacing.Left = 10
+        BorderStyle = bsNone
+        Font.Height = -19
+        Font.Name = 'Sans'
+        Lines.Strings = (
+          'OpenRecibo'
+          'Versão: 0.0.0.0 (00/00/000)'
+          'Licença: GNU GPL2'
+          'Autor: Mauro Redmer da Fonseca'
+          'Contato: mauro_mrf@yahoo.com.br'
+          ''
+          'OpenRecibo é um programa opensource para emisão de recibos comerciais'
+          'simples para Linux e Windows, desenvolvido em Lazarus, utiliza banco de'
+          'dados Firebird, relatorios providos por Fortes Report e componentes da ACBR.'
+          ''
+          'Copyright (C)  2018  Mauro Redmer da Fonseca - mauro_mrf@yahoo.com.br'
+          ''
+          'Este programa é um software livre: você pode redistribuí-lo e/ou'
+          'modificá-lo sob os termos da Licença Pública Geral GNU, conforme'
+          'publicado pela Free Software Foundation, seja a versão 2 da Licença'
+          'ou (a seu critério) qualquer versão posterior.'
+          ''
+          'Este programa é distribuído na esperança de que seja útil,'
+          'mas SEM QUALQUER GARANTIA; sem a garantia implícita de'
+          'COMERCIALIZAÇÃO OU ADEQUAÇÃO A UM DETERMINADO PROPÓSITO.'
+          'Veja a Licença Pública Geral GNU para obter mais detalhes.'
+          ''
+          'Você deve ter recebido uma cópia da Licença Pública Geral GNU'
+          'junto com este programa. Se não, veja <https://www.gnu.org/licenses/>.'
+          ''
+        )
+        ParentFont = False
+        ReadOnly = True
+        ScrollBars = ssAutoBoth
+        TabOrder = 2
+      end
+    end
+    object TabSheet_sair: TTabSheet
+      Caption = 'Sair'
+      OnShow = TabSheet_sairShow
+    end
+  end
+  object StatusBar1: TStatusBar
+    Left = 0
+    Height = 21
+    Top = 541
+    Width = 887
+    Panels = <>
+  end
+end

@@ -1,0 +1,931 @@
+object DataModule1: TDataModule1
+  OnCreate = DataModuleCreate
+  OldCreateOrder = False
+  Height = 339
+  HorizontalOffset = 775
+  VerticalOffset = 120
+  Width = 541
+  object IBConnection: TIBConnection
+    Connected = False
+    LoginPrompt = False
+    DatabaseName = 'Estrela_db'
+    KeepConnection = False
+    Password = 'masterkey'
+    Transaction = SQLTransaction
+    UserName = 'sysdba'
+    CharSet = 'UTF8'
+    HostName = '192.168.2.5'
+    Options = []
+    Role = 'OpenRecibo'
+    left = 48
+    top = 32
+  end
+  object SQLTransaction: TSQLTransaction
+    Active = False
+    Action = caRollbackRetaining
+    Database = IBConnection
+    Options = []
+    left = 184
+    top = 32
+  end
+  object SQLS_createtable: TSQLScript
+    DataBase = IBConnection
+    Transaction = SQLTransaction
+    Directives.Strings = (
+      'SET TERM'
+      'COMMIT WORK'
+      'COMMIT RETAIN'
+      'COMMIT'
+      '#IFDEF'
+      '#IFNDEF'
+      '#ELSE'
+      '#ENDIF'
+      '#DEFINE'
+      '#UNDEF'
+      '#UNDEFINE'
+    )
+    Script.Strings = (
+      '---------------------------------------'
+      '--referentes'
+      '---------------------------------------'
+      'create table recibo_referente('
+      '  id integer not null primary key,'
+      '  ativo integer default 1,'
+      '  tsinsert timestamp,'
+      '  tsupdate timestamp,'
+      '  referente varchar(255)'
+      ');'
+      ''
+      'create generator recibo_referente_id;'
+      ''
+      'SET TERM ^ ;'
+      ''
+      'CREATE TRIGGER tr_recibo_referente_insert FOR recibo_referente'
+      '  ACTIVE BEFORE INSERT POSITION 0 AS'
+      'BEGIN'
+      '  if (new.id is NULL) then new.id = gen_id(recibo_referente_id,1);'
+      '  new.tsinsert = current_timestamp;'
+      '  --new.tsupdate = new.tsinsert;'
+      'END^'
+      ''
+      'CREATE TRIGGER tr_recibo_referente_update FOR recibo_referente'
+      '  ACTIVE BEFORE UPDATE POSITION 0 AS'
+      'BEGIN'
+      '  new.tsupdate = current_timestamp;'
+      'END^'
+      ''
+      'SET TERM ; ^'
+      ''
+      '---------------------------------------'
+      '--pessoa'
+      '---------------------------------------'
+      'create table recibo_pessoa('
+      '  id integer not null primary key,'
+      '  ativo integer default 1,'
+      '  tsinsert timestamp,'
+      '  tsupdate timestamp,'
+      '  nome varchar(80),'
+      '  tagfisica integer,'
+      '  cpf varchar(20),'
+      '  rg varchar(20),'
+      '  cnpj varchar(20),'
+      '  ie varchar(20),'
+      '  endereco varchar(80),'
+      '  complemento varchar(80),'
+      '  bairro varchar(50),'
+      '  cidade varchar(50),'
+      '  estado varchar(3),'
+      '  cep varchar(15),'
+      '  telefone varchar(80),'
+      '  email varchar(80),'
+      '  web varchar(80)'
+      ');'
+      ''
+      'create generator recibo_pessoa_id;'
+      ''
+      'SET TERM ^ ;'
+      ''
+      'CREATE TRIGGER tr_recibo_pessoa_insert FOR recibo_pessoa'
+      '  ACTIVE BEFORE INSERT POSITION 0 AS'
+      'BEGIN'
+      '  if (new.id is null) then new.id = gen_id(recibo_pessoa_id,1);'
+      '  new.tsinsert = current_timestamp;'
+      '  --new.tsupdate = new.tsinsert;'
+      'END^'
+      ''
+      'CREATE TRIGGER tr_recibo_pessoa_update FOR recibo_pessoa'
+      '  ACTIVE BEFORE UPDATE POSITION 0 AS'
+      'BEGIN'
+      '  new.tsupdate = current_timestamp;'
+      'END^'
+      ''
+      'SET TERM ; ^'
+      ''
+      ''
+      '---------------------------------------'
+      '--recibos'
+      '---------------------------------------'
+      'create table recibo('
+      '  id integer not null primary key,'
+      '  ativo integer default 1,'
+      '  tsinsert timestamp,'
+      '  tsupdate timestamp,'
+      '  numero varchar(20),'
+      '  data date,'
+      '  valor numeric(5,2),'
+      '  vias integer default 1,'
+      '  lkpagador integer,'
+      '  lkemitente integer,'
+      '  referente varchar(255),'
+      '  obs varchar(255),'
+      '  foreign key(lkpagador) references recibo_pessoa(id),'
+      '  foreign key(lkemitente) references recibo_pessoa(id)'
+      ');'
+      ''
+      'create generator recibo_id;'
+      ''
+      'SET TERM ^ ;'
+      ''
+      'CREATE TRIGGER tr_recibo_insert FOR recibo'
+      '  ACTIVE BEFORE INSERT POSITION 0 AS'
+      'BEGIN'
+      '  if (new.id is NULL) then new.id = gen_id(recibo_id,1);'
+      '  new.tsinsert = current_timestamp;'
+      '  --new.tsupdate = new.tsinsert;'
+      'END^'
+      ''
+      'CREATE TRIGGER tr_recibo_update FOR recibo'
+      '  ACTIVE BEFORE UPDATE POSITION 0 AS'
+      'BEGIN'
+      '  new.tsupdate = current_timestamp;'
+      'END^'
+      ''
+      'SET TERM ; ^'
+      ''
+    )
+    Terminator = ';'
+    CommentsinSQL = True
+    UseSetTerm = True
+    UseCommit = True
+    UseDefines = True
+    left = 432
+    top = 112
+  end
+  object XMLPropStorage: TXMLPropStorage
+    StoredValues = <>
+    left = 432
+    top = 32
+  end
+  object FBAdmin: TFBAdmin
+    Protocol = IBSPTCPIP
+    UseExceptions = False
+    left = 184
+    top = 112
+  end
+  object SQLQuery: TSQLQuery
+    FieldDefs = <>
+    AutoCalcFields = False
+    Database = IBConnection
+    Transaction = SQLTransaction
+    Options = []
+    Params = <>
+    ParseSQL = False
+    left = 312
+    top = 112
+  end
+  object SQLQ_pessoa: TSQLQuery
+    PacketRecords = -1
+    FieldDefs = <    
+      item
+        Name = 'ID'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'ATIVO'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'TSINSERT'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'TSUPDATE'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'NOME'
+        DataType = ftString
+        Precision = -1
+        Size = 320
+      end    
+      item
+        Name = 'TAGFISICA'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'CPF'
+        DataType = ftString
+        Precision = -1
+        Size = 80
+      end    
+      item
+        Name = 'RG'
+        DataType = ftString
+        Precision = -1
+        Size = 80
+      end    
+      item
+        Name = 'CNPJ'
+        DataType = ftString
+        Precision = -1
+        Size = 80
+      end    
+      item
+        Name = 'IE'
+        DataType = ftString
+        Precision = -1
+        Size = 80
+      end    
+      item
+        Name = 'ENDERECO'
+        DataType = ftString
+        Precision = -1
+        Size = 320
+      end    
+      item
+        Name = 'COMPLEMENTO'
+        DataType = ftString
+        Precision = -1
+        Size = 320
+      end    
+      item
+        Name = 'BAIRRO'
+        DataType = ftString
+        Precision = -1
+        Size = 200
+      end    
+      item
+        Name = 'CIDADE'
+        DataType = ftString
+        Precision = -1
+        Size = 200
+      end    
+      item
+        Name = 'ESTADO'
+        DataType = ftString
+        Precision = -1
+        Size = 12
+      end    
+      item
+        Name = 'CEP'
+        DataType = ftString
+        Precision = -1
+        Size = 60
+      end    
+      item
+        Name = 'TELEFONE'
+        DataType = ftString
+        Precision = -1
+        Size = 320
+      end    
+      item
+        Name = 'EMAIL'
+        DataType = ftString
+        Precision = -1
+        Size = 320
+      end    
+      item
+        Name = 'WEB'
+        DataType = ftString
+        Precision = -1
+        Size = 320
+      end>
+    AutoCalcFields = False
+    Filter = 'ativo =  1'
+    Database = IBConnection
+    Transaction = SQLTransaction
+    SQL.Strings = (
+      'select * from recibo_pessoa'
+      'order by id desc;'
+    )
+    DeleteSQL.Strings = (
+      'delete from recibo_pessoa where id = :id;'
+    )
+    Options = [sqoKeepOpenOnCommit, sqoAutoApplyUpdates, sqoAutoCommit, sqoCancelUpdatesOnRefresh]
+    Params = <>
+    left = 48
+    top = 184
+    object SQLQ_pessoaID: TLongintField
+      FieldKind = fkData
+      FieldName = 'ID'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object SQLQ_pessoaATIVO: TLongintField
+      FieldKind = fkData
+      FieldName = 'ATIVO'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object SQLQ_pessoaTSINSERT: TDateTimeField
+      FieldKind = fkData
+      FieldName = 'TSINSERT'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object SQLQ_pessoaTSUPDATE: TDateTimeField
+      FieldKind = fkData
+      FieldName = 'TSUPDATE'
+      Index = 3
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object SQLQ_pessoaNOME: TStringField
+      FieldKind = fkData
+      FieldName = 'NOME'
+      Index = 4
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 320
+    end
+    object SQLQ_pessoaTAGFISICA: TLongintField
+      FieldKind = fkData
+      FieldName = 'TAGFISICA'
+      Index = 5
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object SQLQ_pessoaCPF: TStringField
+      FieldKind = fkData
+      FieldName = 'CPF'
+      Index = 6
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 80
+    end
+    object SQLQ_pessoaRG: TStringField
+      FieldKind = fkData
+      FieldName = 'RG'
+      Index = 7
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 80
+    end
+    object SQLQ_pessoaCNPJ: TStringField
+      FieldKind = fkData
+      FieldName = 'CNPJ'
+      Index = 8
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 80
+    end
+    object SQLQ_pessoaIE: TStringField
+      FieldKind = fkData
+      FieldName = 'IE'
+      Index = 9
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 80
+    end
+    object SQLQ_pessoaENDERECO: TStringField
+      FieldKind = fkData
+      FieldName = 'ENDERECO'
+      Index = 10
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 320
+    end
+    object SQLQ_pessoaCOMPLEMENTO: TStringField
+      FieldKind = fkData
+      FieldName = 'COMPLEMENTO'
+      Index = 11
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 320
+    end
+    object SQLQ_pessoaBAIRRO: TStringField
+      FieldKind = fkData
+      FieldName = 'BAIRRO'
+      Index = 12
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 200
+    end
+    object SQLQ_pessoaCIDADE: TStringField
+      FieldKind = fkData
+      FieldName = 'CIDADE'
+      Index = 13
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 200
+    end
+    object SQLQ_pessoaESTADO: TStringField
+      FieldKind = fkData
+      FieldName = 'ESTADO'
+      Index = 14
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 12
+    end
+    object SQLQ_pessoaCEP: TStringField
+      FieldKind = fkData
+      FieldName = 'CEP'
+      Index = 15
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 60
+    end
+    object SQLQ_pessoaTELEFONE: TStringField
+      FieldKind = fkData
+      FieldName = 'TELEFONE'
+      Index = 16
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 320
+    end
+    object SQLQ_pessoaEMAIL: TStringField
+      FieldKind = fkData
+      FieldName = 'EMAIL'
+      Index = 17
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 320
+    end
+    object SQLQ_pessoaWEB: TStringField
+      FieldKind = fkData
+      FieldName = 'WEB'
+      Index = 18
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 320
+    end
+  end
+  object SQLQ_referente: TSQLQuery
+    PacketRecords = -1
+    FieldDefs = <    
+      item
+        Name = 'ID'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'ATIVO'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'TSINSERT'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'TSUPDATE'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'REFERENTE'
+        DataType = ftString
+        Precision = -1
+        Size = 1020
+      end>
+    AutoCalcFields = False
+    Database = IBConnection
+    Transaction = SQLTransaction
+    SQL.Strings = (
+      'select *'
+      'from recibo_referente'
+      'order by id desc;'
+    )
+    InsertSQL.Strings = (
+      ''
+    )
+    UpdateSQL.Strings = (
+      ''
+    )
+    DeleteSQL.Strings = (
+      'delete from recibo_referente where id = :id;'
+    )
+    RefreshSQL.Strings = (
+      ''
+    )
+    Options = [sqoKeepOpenOnCommit, sqoAutoApplyUpdates, sqoAutoCommit, sqoCancelUpdatesOnRefresh, sqoRefreshUsingSelect]
+    Params = <>
+    left = 184
+    top = 184
+    object SQLQ_referenteID: TLongintField
+      FieldKind = fkData
+      FieldName = 'ID'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = []
+      ReadOnly = False
+      Required = False
+    end
+    object SQLQ_referenteATIVO: TLongintField
+      FieldKind = fkData
+      FieldName = 'ATIVO'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object SQLQ_referenteTSINSERT: TDateTimeField
+      FieldKind = fkData
+      FieldName = 'TSINSERT'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object SQLQ_referenteTSUPDATE: TDateTimeField
+      FieldKind = fkData
+      FieldName = 'TSUPDATE'
+      Index = 3
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object SQLQ_referenteREFERENTE: TStringField
+      FieldKind = fkData
+      FieldName = 'REFERENTE'
+      Index = 4
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 1020
+    end
+  end
+  object SQLQ_recibo: TSQLQuery
+    PacketRecords = -1
+    FieldDefs = <    
+      item
+        Name = 'ID'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'ATIVO'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'TSINSERT'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'TSUPDATE'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'NUMERO'
+        DataType = ftString
+        Precision = -1
+        Size = 80
+      end    
+      item
+        Name = 'DATA'
+        DataType = ftDate
+        Precision = -1
+      end    
+      item
+        Name = 'VALOR'
+        DataType = ftBCD
+        Precision = 9
+        Size = 2
+      end    
+      item
+        Name = 'VIAS'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'LKPAGADOR'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'PAGADOR'
+        DataType = ftString
+        Precision = -1
+        Size = 320
+      end    
+      item
+        Name = 'LKEMITENTE'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'EMITENTE'
+        DataType = ftString
+        Precision = -1
+        Size = 320
+      end    
+      item
+        Name = 'REFERENTE'
+        DataType = ftString
+        Precision = -1
+        Size = 1020
+      end    
+      item
+        Name = 'OBS'
+        DataType = ftString
+        Precision = -1
+        Size = 1020
+      end>
+    AutoCalcFields = False
+    Database = IBConnection
+    Transaction = SQLTransaction
+    SQL.Strings = (
+      'SELECT r.ID, r.ATIVO, r.TSINSERT, r.TSUPDATE, r.NUMERO, r.DATA, r.VALOR, r.VIAS,'
+      '       r.LKPAGADOR,   (select p.nome from recibo_pessoa p      where p.id   = r.LKPAGADOR)   as pagador,  '
+      '       r.LKEMITENTE,  (select p.nome from recibo_pessoa p      where p.id   = r.LKEMITENTE)  as emitente, '
+      '       r.REFERENTE, r.OBS'
+      'FROM RECIBO r order by r.ID desc;'
+    )
+    DeleteSQL.Strings = (
+      'delete from recibo where id = :id;'
+    )
+    Options = [sqoKeepOpenOnCommit, sqoAutoApplyUpdates, sqoAutoCommit, sqoCancelUpdatesOnRefresh, sqoRefreshUsingSelect]
+    Params = <>
+    left = 312
+    top = 184
+    object SQLQ_reciboID: TLongintField
+      FieldKind = fkData
+      FieldName = 'ID'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+    end
+    object SQLQ_reciboATIVO: TLongintField
+      FieldKind = fkData
+      FieldName = 'ATIVO'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object SQLQ_reciboTSINSERT: TDateTimeField
+      FieldKind = fkData
+      FieldName = 'TSINSERT'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object SQLQ_reciboTSUPDATE: TDateTimeField
+      FieldKind = fkData
+      FieldName = 'TSUPDATE'
+      Index = 3
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object SQLQ_reciboNUMERO: TStringField
+      FieldKind = fkData
+      FieldName = 'NUMERO'
+      Index = 4
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 80
+    end
+    object SQLQ_reciboDATA: TDateField
+      FieldKind = fkData
+      FieldName = 'DATA'
+      Index = 5
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object SQLQ_reciboVALOR: TBCDField
+      FieldKind = fkData
+      FieldName = 'VALOR'
+      Index = 6
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '#.00'
+      Precision = 9
+      Currency = False
+      MaxValue = 0
+      MinValue = 0
+      Size = 2
+    end
+    object SQLQ_reciboVIAS: TLongintField
+      FieldKind = fkData
+      FieldName = 'VIAS'
+      Index = 7
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object SQLQ_reciboLKPAGADOR: TLongintField
+      FieldKind = fkData
+      FieldName = 'LKPAGADOR'
+      Index = 8
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object SQLQ_reciboPAGADOR: TStringField
+      FieldKind = fkData
+      FieldName = 'PAGADOR'
+      Index = 9
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 320
+    end
+    object SQLQ_reciboLKEMITENTE: TLongintField
+      FieldKind = fkData
+      FieldName = 'LKEMITENTE'
+      Index = 10
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object SQLQ_reciboEMITENTE: TStringField
+      FieldKind = fkData
+      FieldName = 'EMITENTE'
+      Index = 11
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 320
+    end
+    object SQLQ_reciboREFERENTE: TStringField
+      FieldKind = fkData
+      FieldName = 'REFERENTE'
+      Index = 12
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 1020
+    end
+    object SQLQ_reciboOBS: TStringField
+      FieldKind = fkData
+      FieldName = 'OBS'
+      Index = 13
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 1020
+    end
+  end
+  object DS_pessoa: TDataSource
+    DataSet = SQLQ_pessoa
+    left = 48
+    top = 256
+  end
+  object DS_referente: TDataSource
+    DataSet = SQLQ_referente
+    left = 184
+    top = 256
+  end
+  object DS_recibo: TDataSource
+    DataSet = SQLQ_recibo
+    left = 312
+    top = 256
+  end
+  object SQLDBLibraryLoader: TSQLDBLibraryLoader
+    Enabled = False
+    ConnectionType = 'Firebird'
+    LibraryName = 'libfbclient.so.2.5.4'
+    left = 48
+    top = 112
+  end
+  object SQLS_droptable: TSQLScript
+    DataBase = IBConnection
+    Transaction = SQLTransaction
+    Directives.Strings = (
+      'SET TERM'
+      'COMMIT WORK'
+      'COMMIT RETAIN'
+      'COMMIT'
+      '#IFDEF'
+      '#IFNDEF'
+      '#ELSE'
+      '#ENDIF'
+      '#DEFINE'
+      '#UNDEF'
+      '#UNDEFINE'
+    )
+    Script.Strings = (
+      'DROP TABLE RECIBO;'
+      'DROP TABLE RECIBO_PESSOA;'
+      'DROP TABLE RECIBO_REFERENTE;'
+      'DROP GENERATOR RECIBO_ID;'
+      'DROP GENERATOR RECIBO_PESSOA_ID;'
+      'DROP GENERATOR RECIBO_REFERENTE_ID;'
+    )
+    Terminator = ';'
+    CommentsinSQL = True
+    UseSetTerm = True
+    UseCommit = True
+    UseDefines = True
+    left = 432
+    top = 184
+  end
+  object SQLScript: TSQLScript
+    DataBase = IBConnection
+    Directives.Strings = (
+      'SET TERM'
+      'COMMIT WORK'
+      'COMMIT RETAIN'
+      'COMMIT'
+      '#IFDEF'
+      '#IFNDEF'
+      '#ELSE'
+      '#ENDIF'
+      '#DEFINE'
+      '#UNDEF'
+      '#UNDEFINE'
+      'SET TERM'
+      'COMMIT WORK'
+      'COMMIT RETAIN'
+      'COMMIT'
+      '#IFDEF'
+      '#IFNDEF'
+      '#ELSE'
+      '#ENDIF'
+      '#DEFINE'
+      '#UNDEF'
+      '#UNDEFINE'
+    )
+    Terminator = ';'
+    CommentsinSQL = True
+    UseSetTerm = True
+    UseCommit = True
+    UseDefines = True
+    left = 312
+    top = 32
+  end
+end
